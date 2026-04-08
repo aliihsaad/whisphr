@@ -1,8 +1,9 @@
 import { app, globalShortcut, Tray, Menu, nativeImage, session, desktopCapturer } from 'electron'
 import { join } from 'path'
 import * as dotenv from 'dotenv'
-import { createOverlayWindow, createAnswerWindow, createSettingsWindow, createPreviewWindow, toggleOverlay, hideOverlay, getOverlayWindow } from './windows'
+import { createOverlayWindow, createAnswerWindow, createSettingsWindow, createPreviewWindow, toggleOverlay, hideOverlay, getOverlayWindow, getSettingsWindow } from './windows'
 import { setupIpcHandlers } from './ipc-handlers'
+import { checkForUpdates } from './services/update-checker'
 import { DEFAULT_SHORTCUTS } from '@shared/constants'
 
 // Load environment variables
@@ -68,6 +69,17 @@ app.whenReady().then(() => {
   createTray()
 
   console.log('[App] Ready')
+
+  // Check for updates after startup
+  setTimeout(async () => {
+    const update = await checkForUpdates()
+    if (update?.updateAvailable) {
+      const settings = getSettingsWindow()
+      if (settings) {
+        settings.webContents.send('update:available', update)
+      }
+    }
+  }, 3000)
 })
 
 function createTray(): void {

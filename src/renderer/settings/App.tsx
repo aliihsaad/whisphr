@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { Radio, FileText, Settings, Monitor, FolderOpen, Zap, StickyNote, Plus, Search, Star, Trash2, Clock, Eye, EyeOff } from 'lucide-react'
+import { Radio, FileText, Settings, Monitor, FolderOpen, Zap, StickyNote, Plus, Search, Star, Trash2, Clock, Eye, EyeOff, Download } from 'lucide-react'
 import ApiConfig from './components/ApiConfig'
 import ContextUpload from './components/ContextUpload'
 import SessionControl from './components/SessionControl'
@@ -164,7 +164,16 @@ export default function App() {
   const [isSessionActive, setIsSessionActive] = useState(false)
   const [showReal, setShowReal] = useState(false)
   const [contentProtection, setContentProtection] = useState(true)
+  const [updateInfo, setUpdateInfo] = useState<{ latestVersion: string; releaseUrl: string } | null>(null)
   const clickTimesRef = useRef<number[]>([])
+
+  // Listen for update notifications
+  useEffect(() => {
+    const cleanup = window.api.onUpdateAvailable((info: any) => {
+      if (info?.updateAvailable) setUpdateInfo(info)
+    })
+    return cleanup
+  }, [])
 
   // Load initial content protection state
   useEffect(() => {
@@ -313,7 +322,17 @@ export default function App() {
             <StickyNote size={11} />
             Cover
           </button>
-          <div className="text-[10px] text-white/15 text-center pt-1">v1.0.2</div>
+          {updateInfo ? (
+            <button
+              onClick={() => window.api.openExternal(updateInfo.releaseUrl)}
+              className="w-full flex items-center justify-center gap-1.5 rounded-lg py-1.5 mt-1 text-[10px] font-medium text-cyan-400/80 bg-cyan-500/[0.06] border border-cyan-500/[0.1] hover:bg-cyan-500/[0.12] transition-all"
+            >
+              <Download size={10} />
+              Update {updateInfo.latestVersion}
+            </button>
+          ) : (
+            <div className="text-[10px] text-white/15 text-center pt-1">v1.0.2</div>
+          )}
         </div>
       </aside>
 

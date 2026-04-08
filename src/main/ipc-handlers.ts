@@ -6,6 +6,7 @@ import { ScreenCaptureService } from './services/screen-capture'
 import { ContextManager } from './services/context-manager'
 import { AudioCaptureService } from './audio/capture'
 import { selectModel, AnswerSource } from '@shared/model-selection'
+import { checkForUpdates } from './services/update-checker'
 import { SUPPORTED_LANGUAGES } from '@shared/constants'
 import {
   getOverlayWindow,
@@ -431,6 +432,11 @@ export function setupIpcHandlers(): void {
       shell.openExternal(url)
     }
     return { success: true }
+  })
+
+  // Update check
+  ipcMain.handle(IPC.CHECK_FOR_UPDATES, async () => {
+    return await checkForUpdates()
   })
 
   // Resume file upload — AI-powered analysis

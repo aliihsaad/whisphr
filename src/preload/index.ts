@@ -62,6 +62,14 @@ contextBridge.exposeInMainWorld('api', {
   // Shell
   openExternal: (url: string) => ipcRenderer.invoke(IPC.OPEN_EXTERNAL, url),
 
+  // Updates
+  checkForUpdates: () => ipcRenderer.invoke(IPC.CHECK_FOR_UPDATES),
+  onUpdateAvailable: (callback: (info: any) => void) => {
+    const handler = (_event: any, info: any) => callback(info)
+    ipcRenderer.on(IPC.UPDATE_AVAILABLE, handler)
+    return () => ipcRenderer.removeListener(IPC.UPDATE_AVAILABLE, handler)
+  },
+
   // Clipboard
   copyToClipboard: (text: string) => ipcRenderer.invoke('clipboard:write', text),
 

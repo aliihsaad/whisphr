@@ -230,4 +230,8 @@ export const IPC = {
 
   // Shell
   OPEN_EXTERNAL: 'shell:open-external',
+
+  // Updates
+  CHECK_FOR_UPDATES: 'update:check',
+  UPDATE_AVAILABLE: 'update:available',
 } as const
