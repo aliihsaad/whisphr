@@ -331,7 +331,7 @@ export default function App() {
               Update {updateInfo.latestVersion}
             </button>
           ) : (
-            <div className="text-[10px] text-white/15 text-center pt-1">v1.0.2</div>
+            <div className="text-[10px] text-white/15 text-center pt-1">v1.0.3</div>
           )}
         </div>
       </aside>

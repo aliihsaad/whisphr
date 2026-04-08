@@ -1,6 +1,6 @@
 {
   "name": "interview-assistant",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Real-time AI interview assistant with invisible overlay",
   "main": "./out/main/main.js",
   "scripts": {
