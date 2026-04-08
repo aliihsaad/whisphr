@@ -43,7 +43,7 @@ All overlay windows use Electron content protection, making them **invisible to 
 
 ## Download
 
-Pre-built installers are available on the [Releases](https://github.com/aliihsaad/interview-assistant/releases) page:
+Pre-built installers are available on the [Releases](https://github.com/aliihsaad/whisphr/releases) page:
 
 | Platform | File | Description |
 |----------|------|-------------|
@@ -65,7 +65,7 @@ No code signing configured — Windows SmartScreen and macOS Gatekeeper will war
 ### Install & Run
 
 ```bash
-git clone https://github.com/aliihsaad/interview-assistant.git
+git clone https://github.com/aliihsaad/whisphr.git
 cd interview-assistant
 npm install
 npm run dev
