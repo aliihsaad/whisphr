@@ -11,11 +11,11 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "outDir": "dist",
-    "baseUrl": ".",
+    "rootDir": "src",
     "paths": {
-      "@shared/*": ["src/shared/*"],
-      "@main/*": ["src/main/*"],
-      "@renderer/*": ["src/renderer/*"]
+      "@shared/*": ["./src/shared/*"],
+      "@main/*": ["./src/main/*"],
+      "@renderer/*": ["./src/renderer/*"]
     }
   },
   "include": ["src/**/*"],

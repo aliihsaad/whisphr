@@ -198,6 +198,9 @@ declare global {
       onShortcutRegenerate: (callback: () => void) => () => void
       onSttReconnecting: (callback: (reconnecting: boolean) => void) => () => void
       onSttReconnectError: (callback: (error: string) => void) => () => void
+      openExternal: (url: string) => Promise<any>
+      checkForUpdates: () => Promise<any>
+      onUpdateAvailable: (callback: (info: any) => void) => () => void
     }
   }
 }

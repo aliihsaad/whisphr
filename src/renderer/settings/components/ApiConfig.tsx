@@ -182,7 +182,7 @@ export default function ApiConfig() {
                 </div>
                 <div className="flex items-center gap-2">
                   {m.vision && (
-                    <Eye size={11} className="text-white/20" title="Supports screen analysis" />
+                    <span title="Supports screen analysis"><Eye size={11} className="text-white/20" /></span>
                   )}
                   <span className={`text-[10.5px] font-medium ${tierColors[m.tier]}`}>
                     {m.cost}

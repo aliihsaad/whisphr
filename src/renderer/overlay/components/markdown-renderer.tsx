@@ -1,5 +1,41 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { Copy, Check } from 'lucide-react'
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
+import typescript from 'highlight.js/lib/languages/typescript'
+import python from 'highlight.js/lib/languages/python'
+import java from 'highlight.js/lib/languages/java'
+import cpp from 'highlight.js/lib/languages/cpp'
+import csharp from 'highlight.js/lib/languages/csharp'
+import go from 'highlight.js/lib/languages/go'
+import rust from 'highlight.js/lib/languages/rust'
+import sql from 'highlight.js/lib/languages/sql'
+import bash from 'highlight.js/lib/languages/bash'
+import json from 'highlight.js/lib/languages/json'
+import xml from 'highlight.js/lib/languages/xml'
+import css from 'highlight.js/lib/languages/css'
+import 'highlight.js/styles/vs2015.min.css'
+
+hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage('js', javascript)
+hljs.registerLanguage('typescript', typescript)
+hljs.registerLanguage('ts', typescript)
+hljs.registerLanguage('python', python)
+hljs.registerLanguage('py', python)
+hljs.registerLanguage('java', java)
+hljs.registerLanguage('cpp', cpp)
+hljs.registerLanguage('c', cpp)
+hljs.registerLanguage('csharp', csharp)
+hljs.registerLanguage('cs', csharp)
+hljs.registerLanguage('go', go)
+hljs.registerLanguage('rust', rust)
+hljs.registerLanguage('sql', sql)
+hljs.registerLanguage('bash', bash)
+hljs.registerLanguage('sh', bash)
+hljs.registerLanguage('json', json)
+hljs.registerLanguage('xml', xml)
+hljs.registerLanguage('html', xml)
+hljs.registerLanguage('css', css)
 
 // --- Types ---
 
@@ -147,8 +183,19 @@ export function CodeBlock({ code, language }: { code: string; language?: string 
     window.setTimeout(() => setCopied(false), 1200)
   }, [code])
 
+  const highlightedHtml = useMemo(() => {
+    try {
+      if (language && hljs.getLanguage(language)) {
+        return hljs.highlight(code, { language }).value
+      }
+      return hljs.highlightAuto(code).value
+    } catch {
+      return code
+    }
+  }, [code, language])
+
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-black/40 my-1">
+    <div className="rounded-xl border border-white/[0.06] bg-[#1e1e1e] my-1">
       <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-2.5">
         <span className="text-[10px] font-semibold uppercase tracking-wider text-cyan-400/50">
           {language || 'code'}
@@ -162,8 +209,8 @@ export function CodeBlock({ code, language }: { code: string; language?: string 
         </button>
       </div>
       <div className="overflow-x-auto px-4 py-3">
-        <pre className="m-0 text-[13px] font-mono leading-relaxed text-emerald-200/80">
-          <code>{code}</code>
+        <pre className="m-0 text-[14px] font-mono leading-relaxed">
+          <code className="hljs" dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
         </pre>
       </div>
     </div>
